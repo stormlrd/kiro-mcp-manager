@@ -1,4 +1,4 @@
-# KIRO MCP Manager by Silent Imperium
+# KIRO MCP Manager by Stormlrd
 
 A Kiro extension for managing Model Context Protocol (MCP) servers with grouped templates and individual server control.
 
