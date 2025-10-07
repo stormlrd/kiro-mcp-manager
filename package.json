@@ -1,0 +1,113 @@
+{
+  "name": "kiro-mcp-manager",
+  "displayName": "Kiro MCP Manager",
+  "description": "Manage MCP servers with grouped templates and individual server control",
+  "version": "1.4.3",
+  "publisher": "SilentImperium",
+  "author": {
+    "name": "Paul Dunlop / KIRO"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/example/zen-mcp-manager"
+  },
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "icon": "icon.png",
+  "categories": [
+    "Other"
+  ],
+  "license": "MIT",
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "views": {
+      "kiro": [
+        {
+          "id": "zenMcpGrouped",
+          "name": "MCP Manager - Quick Load MCP Groups",
+          "when": "true",
+          "type": "tree"
+        },
+        {
+          "id": "zenMcpFilter",
+          "name": "MCP Manager - Filter Available Server List",
+          "when": "true",
+          "type": "webview",
+          "visibility": "visible"
+        },
+        {
+          "id": "zenMcpServers",
+          "name": "MCP Manager - Available MCP Servers",
+          "when": "true",
+          "type": "tree"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "zenMcp.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "zenMcp.loadGroup",
+        "title": "Load Server Group"
+      },
+      {
+        "command": "zenMcp.toggleServer",
+        "title": "Toggle Server"
+      },
+      {
+        "command": "zenMcp.manageEnvVars",
+        "title": "Manage Environment Variables",
+        "icon": "$(settings-gear)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "zenMcp.refresh",
+          "when": "view == zenMcpGrouped || view == zenMcpServers",
+          "group": "navigation"
+        },
+        {
+          "command": "zenMcp.manageEnvVars",
+          "when": "view == zenMcpGrouped || view == zenMcpServers",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "zenMcp.loadGroup",
+          "when": "view == zenMcpGrouped",
+          "group": "inline"
+        },
+        {
+          "command": "zenMcp.toggleServer",
+          "when": "view == zenMcpServers",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4"
+  },
+  "files": [
+    "out/**/*",
+    "config/**/*",
+    "README.md",
+    "icon.png",
+    "package.json",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "version": "1.0.0",
+  "templates": {
+    "ai--machine-learning": {
+      "name": "AI & Machine Learning",
+      "description": "AI & Machine Learning services and tools",
+      "servers": [
+        "awslabs.amazon-bedrock-agentcore-mcp-server",
+        "awslabs.amazon-kendra-index-mcp-server",
+        "awslabs.amazon-qbusiness-anonymous-mcp-server",
+        "awslabs.amazon_qindex_mcp_server",
+        "awslabs.amazon-rekognition-mcp-server",
+        "awslabs.aws-bedrock-custom-model-import-mcp-server",
+        "bedrock-data-automation-mcp-server",
+        "awslabs.bedrock-kb-retrieval-mcp-server",
+        "awslabs.nova-canvas-mcp-server"
+      ],
+      "icon": "\ud83e\udd16"
+    },
+    "integration--messaging": {
+      "name": "Integration & Messaging",
+      "description": "Integration & Messaging services and tools",
+      "servers": [
+        "awslabs.amazon-mq-mcp-server",
+        "awslabs.amazon-sns-sqs-mcp-server",
+        "awslabs.aws-appsync-mcp-server",
+        "awslabs.aws-msk-mcp-server",
+        "awslabs.stepfunctions-tool-mcp-server"
+      ],
+      "icon": "\ud83d\udce1"
+    },
+    "data--analytics": {
+      "name": "Data & Analytics",
+      "description": "Data & Analytics services and tools",
+      "servers": [
+        "Neptune Query",
+        "awslabs.aurora-dsql-mcp-server",
+        "awslabs.documentdb-mcp-server",
+        "awslabs.dynamodb-mcp-server",
+        "awslabs.elasticache-mcp-server",
+        "awslabs.memcached-mcp-server",
+        "awslabs.mysql-mcp-server",
+        "awslabs.postgres-mcp-server",
+        "awslabs.redshift-mcp-server",
+        "awslabs.s3-tables-mcp-server",
+        "awslabs.valkey-mcp-server"
+      ],
+      "icon": "\ud83d\udcca"
+    },
+    "getting-started-with-aws": {
+      "name": "Getting Started with AWS",
+      "description": "Getting Started with AWS services and tools",
+      "servers": [
+        "awslabs.aws-api-mcp-server",
+        "aws-knowledge-mcp-server"
+      ],
+      "icon": "\u2601\ufe0f"
+    },
+    "specialized-services": {
+      "name": "Specialized Services",
+      "description": "Specialized Services services and tools",
+      "servers": [
+        "awslabs.aws-dataprocessing-mcp-server",
+        "awslabs.aws-diagram-mcp-server",
+        "aws-iot-sitewise",
+        "awslabs.aws-location-mcp-server",
+        "awslabs.core-mcp-server",
+        "awslabs.timestream-for-influxdb-mcp-server"
+      ],
+      "icon": "\ud83c\udf10"
+    },
+    "documentation": {
+      "name": "Documentation",
+      "description": "Documentation services and tools",
+      "servers": [
+        "awslabs.aws-documentation-mcp-server"
+      ],
+      "icon": "\ud83d\udcda"
+    },
+    "healthcare--lifesciences": {
+      "name": "Healthcare & Lifesciences",
+      "description": "Healthcare & Lifesciences services and tools",
+      "servers": [
+        "aws-healthomics",
+        "healthlake"
+      ],
+      "icon": "\ud83c\udfe5"
+    },
+    "cost--operations": {
+      "name": "Cost & Operations",
+      "description": "Cost & Operations services and tools",
+      "servers": [
+        "awslabs.aws-pricing-mcp-server",
+        "awslabs.billing-cost-management-mcp-server",
+        "awslabs.cloudtrail-mcp-server",
+        "awslabs.cloudwatch-appsignals-mcp",
+        "awslabs.cloudwatch-logs-mcp-server",
+        "awslabs.cloudwatch-mcp-server",
+        "awslabs.cost-explorer-mcp-server",
+        "prometheus"
+      ],
+      "icon": "\ud83d\udcb0"
+    },
+    "infrastructure--deployment": {
+      "name": "Infrastructure & Deployment",
+      "description": "Infrastructure & Deployment services and tools",
+      "servers": [
+        "awslabs.aws-serverless-mcp-server",
+        "awslabs_support_mcp_server",
+        "awslabs.ccapi-mcp-server",
+        "awslabs.cdk-mcp-server",
+        "awslabs.cfn-mcp-server",
+        "awslabs.ecs-mcp-server",
+        "eks-mcp-server",
+        "awslabs.finch-mcp-server",
+        "awslabs.lambda-tool-mcp-server",
+        "awslabs.terraform-mcp-server"
+      ],
+      "icon": "\ud83c\udfd7\ufe0f"
+    },
+    "developer-tools--support": {
+      "name": "Developer Tools & Support",
+      "description": "Developer Tools & Support services and tools",
+      "servers": [
+        "awslabs.code-doc-gen-mcp-server",
+        "awslabs.frontend-mcp-server",
+        "awslabs.git-repo-research-mcp-server",
+        "awslabs.iam-mcp-server",
+        "awslabs.openapi-mcp-server",
+        "awslabs.syntheticdata-mcp-server",
+        "well-architected-security-mcp-server"
+      ],
+      "icon": "\ud83d\udee0\ufe0f"
+    }
+  }
+}
