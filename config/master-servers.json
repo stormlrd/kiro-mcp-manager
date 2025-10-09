@@ -1,9 +1,5 @@
 {
-  "servers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp", "--api-key", "YOUR_API_KEY"]
-    },
+  "mcpServers": {
     "awslabs.amazon-bedrock-agentcore-mcp-server": {
       "command": "uvx",
       "args": [
@@ -32,6 +28,18 @@
       "autoApprove": [],
       "documentation_url": "https://awslabs.github.io/mcp/servers/amazon-kendra-index-mcp-server/",
       "category": "AI & Machine Learning"
+    },
+    "amazon-keyspaces-mcp-server": {
+      "command": "uvx awslabs.amazon-keyspaces-mcp-server@latest",
+      "env": {
+        "AWS_PROFILE": "your-aws-profile",
+        "AWS_REGION": "us-east-1",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [],
+      "documentation_url": "https://awslabs.github.io/mcp/servers/amazon-keyspaces-mcp-server/",
+      "category": "Data & Analytics"
     },
     "awslabs.amazon-mq-mcp-server": {
       "command": "uvx",
@@ -271,7 +279,12 @@
       "category": "Specialized Services"
     },
     "aws-knowledge-mcp-server": {
-      "url": "https://knowledge-mcp.global.api.aws",
+      "command": "uvx",
+      "args": [
+        "fastmcp",
+        "run",
+        "https://knowledge-mcp.global.api.aws"
+      ],
       "documentation_url": "https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server/",
       "category": "Getting Started with AWS"
     },
@@ -563,7 +576,7 @@
     "awslabs.dynamodb-mcp-server": {
       "command": "uvx",
       "args": [
-        "awslabs.dynamodb-mcp-server@1.0.9"
+        "awslabs.dynamodb-mcp-server@latest"
       ],
       "env": {
         "DDB-MCP-READONLY": "true",
@@ -938,6 +951,5 @@
       "documentation_url": "https://awslabs.github.io/mcp/servers/well-architected-security-mcp-server/",
       "category": "Developer Tools & Support"
     }
-  },
-  "version": "3.0.0"
+  }
 }

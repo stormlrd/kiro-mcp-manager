@@ -17,22 +17,11 @@
       ],
       "icon": "\ud83e\udd16"
     },
-    "integration--messaging": {
-      "name": "Integration & Messaging",
-      "description": "Integration & Messaging services and tools",
-      "servers": [
-        "awslabs.amazon-mq-mcp-server",
-        "awslabs.amazon-sns-sqs-mcp-server",
-        "awslabs.aws-appsync-mcp-server",
-        "awslabs.aws-msk-mcp-server",
-        "awslabs.stepfunctions-tool-mcp-server"
-      ],
-      "icon": "\ud83d\udce1"
-    },
     "data--analytics": {
       "name": "Data & Analytics",
       "description": "Data & Analytics services and tools",
       "servers": [
+        "amazon-keyspaces-mcp-server",
         "Neptune Query",
         "awslabs.aurora-dsql-mcp-server",
         "awslabs.documentdb-mcp-server",
@@ -46,6 +35,18 @@
         "awslabs.valkey-mcp-server"
       ],
       "icon": "\ud83d\udcca"
+    },
+    "integration--messaging": {
+      "name": "Integration & Messaging",
+      "description": "Integration & Messaging services and tools",
+      "servers": [
+        "awslabs.amazon-mq-mcp-server",
+        "awslabs.amazon-sns-sqs-mcp-server",
+        "awslabs.aws-appsync-mcp-server",
+        "awslabs.aws-msk-mcp-server",
+        "awslabs.stepfunctions-tool-mcp-server"
+      ],
+      "icon": "\ud83d\udce1"
     },
     "getting-started-with-aws": {
       "name": "Getting Started with AWS",
