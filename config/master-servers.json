@@ -1,6 +1,6 @@
 {
-  "mcpServers": {
-    "awslabs.amazon-bedrock-agentcore-mcp-server": {
+  "servers": {
+    "bedrock-agentcore-mcp-server": {
       "command": "uvx",
       "args": [
         "awslabs.amazon-bedrock-agentcore-mcp-server@latest"
@@ -244,7 +244,8 @@
       ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR",
-        "AWS_DOCUMENTATION_PARTITION": "aws"
+        "AWS_DOCUMENTATION_PARTITION": "aws",
+        "MCP_USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
       },
       "disabled": false,
       "autoApprove": [],
@@ -582,7 +583,11 @@
         "DDB-MCP-READONLY": "true",
         "AWS_PROFILE": "default",
         "AWS_REGION": "us-west-2",
-        "FASTMCP_LOG_LEVEL": "ERROR"
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "MYSQL_CLUSTER_ARN": "arn:aws:rds:$REGION:$ACCOUNT_ID:cluster:$CLUSTER_NAME",
+        "MYSQL_SECRET_ARN": "arn:aws:secretsmanager:$REGION:$ACCOUNT_ID:secret:$SECRET_NAME",
+        "MYSQL_DATABASE": "<DATABASE_NAME>",
+        "MYSQL_MAX_QUERY_RESULTS": 500
       },
       "disabled": false,
       "autoApprove": [],

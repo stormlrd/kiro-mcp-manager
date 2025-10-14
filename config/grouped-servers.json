@@ -5,7 +5,7 @@
       "name": "AI & Machine Learning",
       "description": "AI & Machine Learning services and tools",
       "servers": [
-        "awslabs.amazon-bedrock-agentcore-mcp-server",
+        "bedrock-agentcore-mcp-server",
         "awslabs.amazon-kendra-index-mcp-server",
         "awslabs.amazon-qbusiness-anonymous-mcp-server",
         "awslabs.amazon_qindex_mcp_server",
