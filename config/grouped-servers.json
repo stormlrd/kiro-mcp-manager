@@ -5,11 +5,10 @@
       "name": "AI & Machine Learning",
       "description": "AI & Machine Learning services and tools",
       "servers": [
-        "awslabs.amazon-bedrock-agentcore-mcp-server",
+        "bedrock-agentcore-mcp-server",
         "awslabs.amazon-kendra-index-mcp-server",
         "awslabs.amazon-qbusiness-anonymous-mcp-server",
         "awslabs.amazon_qindex_mcp_server",
-        "awslabs.amazon-rekognition-mcp-server",
         "awslabs.aws-bedrock-custom-model-import-mcp-server",
         "bedrock-data-automation-mcp-server",
         "awslabs.bedrock-kb-retrieval-mcp-server",
@@ -95,7 +94,6 @@
         "awslabs.billing-cost-management-mcp-server",
         "awslabs.cloudtrail-mcp-server",
         "awslabs.cloudwatch-appsignals-mcp",
-        "awslabs.cloudwatch-logs-mcp-server",
         "awslabs.cloudwatch-mcp-server",
         "awslabs.cost-explorer-mcp-server",
         "prometheus"
@@ -118,6 +116,14 @@
         "awslabs.terraform-mcp-server"
       ],
       "icon": "\ud83c\udfd7\ufe0f"
+    },
+    "uncategorized": {
+      "name": "Uncategorized",
+      "description": "Uncategorized services and tools",
+      "servers": [
+        "applicationsignals"
+      ],
+      "icon": "\ud83d\udce6"
     },
     "developer-tools--support": {
       "name": "Developer Tools & Support",

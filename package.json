@@ -2,7 +2,7 @@
   "name": "kiro-mcp-manager",
   "displayName": "Kiro MCP Manager",
   "description": "Manage MCP servers with grouped templates and individual server control",
-  "version": "1.4.4",
+  "version": "1.4.6",
   "publisher": "Stormlrd",
   "author": {
     "name": "Stormlrd / KIRO"
