@@ -41,6 +41,9 @@ export function activate(context: vscode.ExtensionContext) {
     // Ensure env-vars.json exists in workspace
     ensureEnvVarsConfig(context).catch(console.error);
 
+    // Check .gitignore for security
+    checkGitignoreSecurity().catch(console.error);
+
     // Create tree data providers
     const groupedProvider = new McpGroupedProvider(context);
     const serversProvider = new McpServersProvider(context);
@@ -566,4 +569,89 @@ async function toggleServer(serverId: string, server: McpServer): Promise<void> 
     }
 
     await saveWorkspaceMcpConfig(currentConfig);
+}
+
+async function checkGitignoreSecurity(): Promise<void> {
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+        return; // No workspace, nothing to check
+    }
+
+    const gitignorePath = path.join(workspaceFolder.uri.fsPath, '.gitignore');
+    const envVarsPath = '.kiro/settings/env-vars.json';
+    const mcpPath = '.kiro/settings/mcp.json';
+    const settingsFolder = '.kiro/settings';
+
+    try {
+        // Check if .gitignore exists
+        await fs.promises.access(gitignorePath);
+        
+        // Read .gitignore content
+        const gitignoreContent = await fs.promises.readFile(gitignorePath, 'utf8');
+        const lines = gitignoreContent.split('\n').map(line => line.trim());
+
+        // Check if sensitive files are ignored
+        const hasEnvVarsIgnore = lines.some(line => 
+            line === envVarsPath || 
+            line === settingsFolder || 
+            line === '.kiro/settings/' ||
+            line === '.kiro/settings/*' ||
+            line.includes('env-vars.json')
+        );
+
+        const hasMcpIgnore = lines.some(line => 
+            line === mcpPath || 
+            line === settingsFolder || 
+            line === '.kiro/settings/' ||
+            line === '.kiro/settings/*' ||
+            line.includes('mcp.json')
+        );
+
+        if (!hasEnvVarsIgnore || !hasMcpIgnore) {
+            const result = await vscode.window.showWarningMessage(
+                '⚠️ Security Warning: Your .kiro/settings folder contains sensitive configuration files (env-vars.json, mcp.json) that should not be committed to Git.',
+                'Add to .gitignore',
+                'Ignore Warning'
+            );
+
+            if (result === 'Add to .gitignore') {
+                await addToGitignore(gitignorePath, settingsFolder);
+                vscode.window.showInformationMessage('✓ Added .kiro/settings to .gitignore');
+            }
+        }
+    } catch (error) {
+        // .gitignore doesn't exist
+        const result = await vscode.window.showWarningMessage(
+            '⚠️ Security Warning: No .gitignore file found in your workspace. Your .kiro/settings folder contains sensitive configuration files that should not be committed to Git.',
+            'Create .gitignore',
+            'Ignore Warning'
+        );
+
+        if (result === 'Create .gitignore') {
+            await createGitignore(workspaceFolder.uri.fsPath);
+            vscode.window.showInformationMessage('✓ Created .gitignore with .kiro/settings excluded');
+        }
+    }
+}
+
+async function createGitignore(workspacePath: string): Promise<void> {
+    const gitignorePath = path.join(workspacePath, '.gitignore');
+    const content = `# Kiro MCP Manager - Sensitive configuration files
+.kiro/settings/
+`;
+    await fs.promises.writeFile(gitignorePath, content, 'utf8');
+}
+
+async function addToGitignore(gitignorePath: string, entry: string): Promise<void> {
+    let content = await fs.promises.readFile(gitignorePath, 'utf8');
+    
+    // Add a newline if the file doesn't end with one
+    if (!content.endsWith('\n')) {
+        content += '\n';
+    }
+    
+    // Add comment and entry
+    content += `\n# Kiro MCP Manager - Sensitive configuration files\n${entry}/\n`;
+    
+    await fs.promises.writeFile(gitignorePath, content, 'utf8');
 }
