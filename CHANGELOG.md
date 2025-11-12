@@ -11,6 +11,9 @@ All notable changes to the Kiro MCP Manager extension will be documented in this
 - One-click option to create .gitignore or add exclusions for sensitive files
 - Protection for env-vars.json and mcp.json files containing credentials
 
+### Fixed
+- Corrected publisher name back to "Stormlrd" to prevent duplicate extension installations
+
 ### Security
 - Prevents accidental commit of sensitive MCP server credentials and API keys
 

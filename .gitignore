@@ -6,8 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# kiro settings
-.kiro/settings/*
+
 
 # Runtime data
 pids
@@ -117,3 +116,6 @@ Thumbs.db
 # Build outputs
 dist/
 build/
+
+# Kiro MCP Manager - Sensitive configuration files
+.kiro/settings/
