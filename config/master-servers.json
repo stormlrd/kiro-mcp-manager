@@ -1,5 +1,21 @@
 {
   "servers": {
+    "strands-agents": {
+      "command": "uvx",
+      "args": ["strands-agents-mcp-server"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "INFO"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "search_docs",
+        "fetch_doc"
+      ]
+    },    
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
     "bedrock-agentcore-mcp-server": {
       "command": "uvx",
       "args": [
@@ -91,22 +107,6 @@
         "AWS_REGION": "us-east-1"
       },
       "documentation_url": "https://awslabs.github.io/mcp/servers/amazon-qindex-mcp-server/",
-      "category": "AI & Machine Learning"
-    },
-    "awslabs.amazon-rekognition-mcp-server": {
-      "command": "uvx",
-      "args": [
-        "awslabs.amazon-rekognition-mcp-server@latest"
-      ],
-      "env": {
-        "AWS_PROFILE": "your-aws-profile",
-        "AWS_REGION": "us-east-1",
-        "BASE_DIR": "/path/to/base/directory",
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false,
-      "autoApprove": [],
-      "documentation_url": "https://awslabs.github.io/mcp/servers/amazon-rekognition-mcp-server/",
       "category": "AI & Machine Learning"
     },
     "awslabs.amazon-sns-sqs-mcp-server": {
@@ -257,10 +257,16 @@
       "args": [
         "awslabs.aws-healthomics-mcp-server"
       ],
+      "timeout": 300000,
       "env": {
         "AWS_REGION": "us-east-1",
         "AWS_PROFILE": "your-profile",
-        "HEALTHOMICS_DEFAULT_MAX_RESULTS": "10"
+        "HEALTHOMICS_DEFAULT_MAX_RESULTS": "10",
+        "GENOMICS_SEARCH_S3_BUCKETS": "s3://my-genomics-data/,s3://shared-references/",
+        "GENOMICS_SEARCH_ENABLE_S3_TAG_SEARCH": "true",
+        "GENOMICS_SEARCH_MAX_TAG_BATCH_SIZE": "100",
+        "GENOMICS_SEARCH_RESULT_CACHE_TTL": "600",
+        "GENOMICS_SEARCH_TAG_CACHE_TTL": "300"
       },
       "documentation_url": "https://awslabs.github.io/mcp/servers/aws-healthomics-mcp-server/",
       "category": "Healthcare & Lifesciences"
@@ -268,7 +274,7 @@
     "aws-iot-sitewise": {
       "command": "uvx",
       "args": [
-        "awslabs.aws-iot-sitewise-mcp-server"
+        "awslabs.aws-iot-sitewise-mcp-server@latest"
       ],
       "env": {
         "AWS_REGION": "us-west-2",
@@ -459,6 +465,22 @@
       "documentation_url": "https://awslabs.github.io/mcp/servers/cloudtrail-mcp-server/",
       "category": "Cost & Operations"
     },
+    "applicationsignals": {
+      "autoApprove": [],
+      "disabled": false,
+      "command": "uvx",
+      "args": [
+        "awslabs.cloudwatch-applicationsignals-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_PROFILE": "[The AWS Profile Name to use for AWS access]",
+        "AWS_REGION": "[AWS Region]",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "transportType": "stdio",
+      "documentation_url": "https://awslabs.github.io/mcp/servers/cloudwatch-applicationsignals-mcp-server/",
+      "category": "Uncategorized"
+    },
     "awslabs.cloudwatch-appsignals-mcp": {
       "autoApprove": [],
       "disabled": false,
@@ -473,23 +495,6 @@
       },
       "transportType": "stdio",
       "documentation_url": "https://awslabs.github.io/mcp/servers/cloudwatch-appsignals-mcp-server/",
-      "category": "Cost & Operations"
-    },
-    "awslabs.cloudwatch-logs-mcp-server": {
-      "autoApprove": [],
-      "disabled": false,
-      "timeout": 60,
-      "command": "uvx",
-      "args": [
-        "awslabs.cloudwatch-logs-mcp-server@latest"
-      ],
-      "env": {
-        "AWS_PROFILE": "[The AWS Profile Name to use for AWS access]",
-        "AWS_REGION": "[The AWS region to run in]",
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "transportType": "stdio",
-      "documentation_url": "https://awslabs.github.io/mcp/servers/cloudwatch-logs-mcp-server/",
       "category": "Cost & Operations"
     },
     "awslabs.cloudwatch-mcp-server": {
@@ -583,11 +588,7 @@
         "DDB-MCP-READONLY": "true",
         "AWS_PROFILE": "default",
         "AWS_REGION": "us-west-2",
-        "FASTMCP_LOG_LEVEL": "ERROR",
-        "MYSQL_CLUSTER_ARN": "arn:aws:rds:$REGION:$ACCOUNT_ID:cluster:$CLUSTER_NAME",
-        "MYSQL_SECRET_ARN": "arn:aws:secretsmanager:$REGION:$ACCOUNT_ID:secret:$SECRET_NAME",
-        "MYSQL_DATABASE": "<DATABASE_NAME>",
-        "MYSQL_MAX_QUERY_RESULTS": 500
+        "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
       "autoApprove": [],
