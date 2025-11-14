@@ -2,6 +2,10 @@
 
 All notable changes to the Kiro MCP Manager extension will be documented in this file.
 
+## [1.4.8] - 2024-11-14
+
+Just fixed the packaging so the links in the marketplate work.
+
 ## [1.4.7] - 2024-11-13
 
 ### Added
