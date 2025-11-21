@@ -1,5 +1,5 @@
 {
-  "servers": {
+  "mcpServers": {
     "strands-agents": {
       "command": "uvx",
       "args": ["strands-agents-mcp-server"],
@@ -15,7 +15,7 @@
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"]
-    },
+    },    
     "bedrock-agentcore-mcp-server": {
       "command": "uvx",
       "args": [
@@ -271,6 +271,20 @@
       "documentation_url": "https://awslabs.github.io/mcp/servers/aws-healthomics-mcp-server/",
       "category": "Healthcare & Lifesciences"
     },
+    "awslabs.aws-iac-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-iac-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_PROFILE": "your-named-profile",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [],
+      "documentation_url": "https://awslabs.github.io/mcp/servers/aws-iac-mcp-server/",
+      "category": "Uncategorized"
+    },
     "aws-iot-sitewise": {
       "command": "uvx",
       "args": [
@@ -466,18 +480,22 @@
       "category": "Cost & Operations"
     },
     "applicationsignals": {
-      "autoApprove": [],
       "disabled": false,
-      "command": "uvx",
+      "timeout": 60,
+      "type": "stdio",
+      "command": "uv",
       "args": [
-        "awslabs.cloudwatch-applicationsignals-mcp-server@latest"
+        "tool",
+        "run",
+        "--from",
+        "awslabs.cloudwatch-applicationsignals-mcp-server@latest",
+        "awslabs.cloudwatch-applicationsignals-mcp-server.exe"
       ],
       "env": {
         "AWS_PROFILE": "[The AWS Profile Name to use for AWS access]",
         "AWS_REGION": "[AWS Region]",
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
-      "transportType": "stdio",
       "documentation_url": "https://awslabs.github.io/mcp/servers/cloudwatch-applicationsignals-mcp-server/",
       "category": "Uncategorized"
     },
@@ -559,6 +577,19 @@
       "documentation_url": "https://awslabs.github.io/mcp/servers/cost-explorer-mcp-server/",
       "category": "Cost & Operations"
     },
+    "awslabs.document-loader-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "awslabs.document-loader-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [],
+      "documentation_url": "https://awslabs.github.io/mcp/servers/document-loader-mcp-server/",
+      "category": "Uncategorized"
+    },
     "awslabs.documentdb-mcp-server": {
       "disabled": false,
       "timeout": 60,
@@ -585,9 +616,6 @@
         "awslabs.dynamodb-mcp-server@latest"
       ],
       "env": {
-        "DDB-MCP-READONLY": "true",
-        "AWS_PROFILE": "default",
-        "AWS_REGION": "us-west-2",
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
