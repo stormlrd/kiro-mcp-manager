@@ -2,10 +2,10 @@
   "name": "kiro-mcp-manager",
   "displayName": "Kiro MCP Manager",
   "description": "Manage MCP servers with grouped templates and individual server control",
-  "version": "1.4.6",
-  "publisher": "Stormlrd",
+  "version": "1.5.0",
+  "publisher": "PaulDunlop",
   "author": {
-    "name": "Stormlrd / KIRO"
+    "name": "Paul Dunlop / KIRO"
   },
   "repository": {
     "type": "git",
@@ -58,6 +58,12 @@
       {
         "command": "zenMcp.toggleServer",
         "title": "Toggle Server"
+      },
+      {
+        "command": "zenMcp.loadRecommendedServers",
+        "title": "Load Recommended Servers",
+        "category": "MCP Manager",
+        "icon": "$(cloud-download)"
       },
       {
         "command": "zenMcp.manageEnvVars",

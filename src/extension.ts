@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { HookManager } from './hookManager';
+
 interface McpServer {
     command?: string;
     args?: string[];
@@ -40,6 +42,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Ensure env-vars.json exists in workspace
     ensureEnvVarsConfig(context).catch(console.error);
+
+    // Ensure agent hook exists
+    HookManager.ensureHook(context).catch(error => {
+        console.error('Failed to ensure agent hook:', error);
+        // Don't block activation on hook creation failure
+    });
 
     // Create tree data providers
     const groupedProvider = new McpGroupedProvider(context);
@@ -81,6 +89,63 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage(`Server "${item.serverId}" ${action}!`);
     });
 
+    const loadRecommendedServersCommand = vscode.commands.registerCommand('zenMcp.loadRecommendedServers', async () => {
+        const input = await vscode.window.showInputBox({
+            prompt: 'Paste the JSON array of recommended servers from the agent',
+            placeHolder: '[{"serverId": "server-name", "reason": "..."}]',
+            validateInput: (value) => {
+                if (!value || value.trim() === '') {
+                    return 'Please enter a JSON array';
+                }
+                try {
+                    const parsed = JSON.parse(value);
+                    if (!Array.isArray(parsed)) {
+                        return 'Input must be a JSON array';
+                    }
+                    return null;
+                } catch (error) {
+                    return 'Invalid JSON format';
+                }
+            }
+        });
+
+        if (!input) {
+            return; // User cancelled
+        }
+
+        try {
+            const recommendations = JSON.parse(input);
+            
+            if (recommendations.length === 0) {
+                vscode.window.showInformationMessage('No servers recommended');
+                return;
+            }
+
+            // Show confirmation with server list
+            const serverList = recommendations.map((r: any) => `• ${r.serverId}: ${r.reason}`).join('\n');
+            const result = await vscode.window.showWarningMessage(
+                `Load ${recommendations.length} recommended MCP server(s)?\n\n${serverList}`,
+                { modal: true },
+                'Yes, Load Servers',
+                'Cancel'
+            );
+
+            if (result === 'Yes, Load Servers') {
+                // Use ServerLoader to load the servers
+                const { ServerLoader } = await import('./serverLoader');
+                const count = await ServerLoader.loadRecommendedServers(recommendations, context);
+                
+                if (count > 0) {
+                    groupedProvider.refresh();
+                    serversProvider.refresh();
+                    vscode.window.showInformationMessage(`Successfully loaded ${count} MCP server(s)!`);
+                }
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to load servers: ${error}`);
+        }
+    });
+
     const manageEnvVarsCommand = vscode.commands.registerCommand('zenMcp.manageEnvVars', async () => {
         const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
         if (!workspaceFolder) {
@@ -110,7 +175,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(refreshCommand, loadGroupCommand, toggleServerCommand, manageEnvVarsCommand);
+    context.subscriptions.push(refreshCommand, loadGroupCommand, toggleServerCommand, loadRecommendedServersCommand, manageEnvVarsCommand);
 }
 
 export function deactivate() { }
