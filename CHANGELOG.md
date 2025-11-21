@@ -2,6 +2,18 @@
 
 All notable changes to the Kiro MCP Manager extension will be documented in this file.
 
+## [1.5.0] - 2024-11-22
+
+### Added
+- Manual agent hook for MCP server recommendations based on design documents
+- Hook analyzes `.kiro/specs/*/design.md` files to recommend relevant MCP servers
+- AI-powered analysis of technical requirements and project needs
+- Automatic hook installation at `.kiro/hooks/mcp-server-recommendations.kiro.hook`
+- Command `zenMcp.loadRecommendedServers` for loading AI-recommended servers
+
+### Changed
+- Hook runs manually (not automatically) to give users control over when recommendations are generated
+- Enhanced README with comprehensive hook documentation and usage examples
 ## [1.4.8] - 2024-11-14
 
 Just fixed the packaging so the links in the marketplate work.

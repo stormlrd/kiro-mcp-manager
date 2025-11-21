@@ -2,6 +2,8 @@
 
 A Kiro extension for managing Model Context Protocol (MCP) servers with grouped templates and individual server control.
 
+For any bugs, feature requests please ensure you go to the github repo (click link on the right hand side) and lodge them through there.
+
 ## Features
 
 ### Two Management Sections:
@@ -68,6 +70,167 @@ A Kiro extension for managing Model Context Protocol (MCP) servers with grouped 
 **Workspace Files (persist across extension updates):**
 - `.kiro/settings/mcp.json` - Your workspace MCP configuration (managed automatically)
 - `.kiro/settings/env-vars.json` - Your environment variables (edit via gear icon)
+
+## Agent Hook: Manual MCP Server Recommendations
+
+The extension installs a **manual agent hook** that analyzes your design documents and recommends relevant MCP servers for your project. This is a powerful way to have AI learn, review, and recommend what MCP servers your project needs based on the designs you've generated.
+
+### How It Works
+
+The hook is **manual**, meaning you trigger it when you're ready. When activated, it:
+1. Reads your design document content from `.kiro/specs/*/design.md`
+2. Analyzes the technical requirements and technologies mentioned
+3. Recommends relevant MCP servers from the available catalog
+4. Provides recommendations for you to review and load
+
+**Why Manual?** This gives you control over when recommendations are generated and lets you review them before loading servers into your workspace.
+
+### Running the Hook
+
+**To trigger the hook manually:**
+1. Open the Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
+2. Search for "Kiro: Run Hook"
+3. Select the "MCP Server Recommendations for Project" hook
+4. Review the AI's recommendations
+5. Use the extension to load recommended servers
+
+Alternatively, you can configure the hook to run automatically on file events (see Customization below).
+
+### Hook Configuration
+
+The hook is automatically created at `.kiro/hooks/mcp-server-recommendations.kiro.hook` when the extension activates.
+
+**Example Hook Structure:**
+```json
+{
+  "enabled": true,
+  "name": "MCP Server Recommendations for Project",
+  "description": "Analyzes all design documents in the project and generates a complete MCP server configuration",
+  "version": "1",
+  "when": {
+    "type": "manual"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are analyzing ALL design documents to generate a COMPLETE MCP server configuration..."
+  }
+}
+```
+
+**Configuration Fields:**
+- `enabled` - Whether the hook is active
+- `name` - Human-readable name for the hook
+- `description` - Description of what the hook does
+- `version` - Hook configuration version
+- `when.type` - Event type to monitor (`fileCreated`, `fileEdited`, `fileSaved`, `fileDeleted`)
+- `when.patterns` - Array of glob patterns matching target files
+- `then.type` - Action type (`askAgent` to invoke AI agent)
+- `then.prompt` - Instructions sent to the agent when the hook triggers
+
+### Trigger Pattern Explained
+
+The pattern `**/.kiro/specs/*/design.md` matches:
+- `**` - Any directory depth
+- `/.kiro/specs/` - The specs directory in your workspace
+- `*` - Any feature name directory
+- `/design.md` - The design document file
+
+**Examples of matching paths:**
+- `.kiro/specs/user-authentication/design.md`
+- `.kiro/specs/payment-processing/design.md`
+- `project/.kiro/specs/api-integration/design.md`
+
+### Agent Response Format
+
+When the hook triggers, the agent analyzes your design and returns recommendations in JSON format:
+
+```json
+[
+  {
+    "serverId": "aws-kb-retrieval",
+    "reason": "Design mentions RAG implementation with vector search, which requires AWS Knowledge Base integration"
+  },
+  {
+    "serverId": "postgres",
+    "reason": "PostgreSQL database is specified for storing user data and relationships"
+  },
+  {
+    "serverId": "github",
+    "reason": "Design includes CI/CD pipeline integration with GitHub Actions"
+  }
+]
+```
+
+**Response Structure:**
+- `serverId` - Must match a server ID from `master-servers.json`
+- `reason` - Brief explanation of why this server is relevant to the design
+
+**Empty Response (no relevant servers):**
+```json
+[]
+```
+
+### What Gets Analyzed
+
+The agent looks for:
+- **Technologies and frameworks** - React, Node.js, Python, etc.
+- **External services and APIs** - AWS services, GitHub, databases
+- **Data storage requirements** - PostgreSQL, DynamoDB, Redis
+- **Cloud platforms** - AWS, Azure, GCP
+- **Development tools** - Git, Docker, testing frameworks
+
+### Customization
+
+You can modify the hook behavior by editing `.kiro/hooks/mcp-server-recommendations.kiro.hook`:
+
+**Run automatically on file creation** instead of manually:
+```json
+"when": {
+  "type": "fileCreated",
+  "patterns": ["**/.kiro/specs/*/design.md"]
+}
+```
+
+**Run automatically on file edits**:
+```json
+"when": {
+  "type": "fileEdited",
+  "patterns": ["**/.kiro/specs/*/design.md"]
+}
+```
+
+**Monitor different files** (e.g., requirements.md):
+```json
+"when": {
+  "type": "fileCreated",
+  "patterns": ["**/.kiro/specs/*/requirements.md"]
+}
+```
+
+**Disable the hook** temporarily:
+```json
+"enabled": false
+```
+
+**Modify the prompt** to change analysis behavior (edit the `then.prompt` field with custom instructions)
+
+### Troubleshooting
+
+**Hook not triggering:**
+- Verify the hook file exists at `.kiro/hooks/mcp-server-recommendations.kiro.hook`
+- Check that your design.md file matches the pattern
+- Ensure the file event matches (created vs edited vs saved)
+- Open the Kiro Hook UI to verify the hook is registered and enabled
+
+**No servers loaded:**
+- Check the agent response format matches the expected JSON structure
+- Verify server IDs exist in `master-servers.json`
+- Review error notifications for specific failure reasons
+
+**Unwanted servers loaded:**
+- Edit the hook prompt to provide more specific guidance
+- Set `autoExecute: false` to review recommendations before loading
+- Manually remove servers from `.kiro/settings/mcp.json`
 
 ## Requirements
 
