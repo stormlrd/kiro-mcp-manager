@@ -2,6 +2,13 @@
 
 All notable changes to the Kiro MCP Manager extension will be documented in this file.
 
+## [1.5.2] - 2024-11-22
+
+### Fixed
+- Fixed MCP servers not showing in available server list due to property name mismatch
+- Updated code to correctly read `mcpServers` property from master-servers.json
+- Fixed server loading in both extension.ts and serverLoader.ts
+
 ## [1.5.1] - 2024-11-22
 
 ### Changed

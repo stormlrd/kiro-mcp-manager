@@ -405,7 +405,7 @@ class McpServersProvider implements vscode.TreeDataProvider<ServerItem> {
             const masterServers = await loadMasterServers(this.context);
             const currentConfig = await loadWorkspaceMcpConfig();
 
-            let servers = Object.entries(masterServers.servers).map(([serverId, server]) =>
+            let servers = Object.entries(masterServers.mcpServers).map(([serverId, server]) =>
                 new ServerItem(serverId, server, serverId in currentConfig.mcpServers)
             );
 
@@ -458,7 +458,7 @@ class ServerItem extends vscode.TreeItem {
     }
 }
 
-async function loadMasterServers(context: vscode.ExtensionContext): Promise<{ servers: Record<string, McpServer> }> {
+async function loadMasterServers(context: vscode.ExtensionContext): Promise<{ mcpServers: Record<string, McpServer> }> {
     const masterPath = path.join(context.extensionPath, 'config', 'master-servers.json');
     const content = await fs.promises.readFile(masterPath, 'utf8');
     return JSON.parse(content);
@@ -610,8 +610,8 @@ async function loadServerGroup(group: ServerGroup, context: vscode.ExtensionCont
     const newConfig: McpConfig = { mcpServers: {} };
 
     for (const serverId of group.servers) {
-        if (masterServers.servers[serverId]) {
-            const serverWithEnv = mergeEnvironmentVariables(masterServers.servers[serverId], envVars.variables);
+        if (masterServers.mcpServers[serverId]) {
+            const serverWithEnv = mergeEnvironmentVariables(masterServers.mcpServers[serverId], envVars.variables);
             newConfig.mcpServers[serverId] = serverWithEnv;
         }
     }
