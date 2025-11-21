@@ -86,6 +86,16 @@
       ],
       "icon": "\ud83c\udfe5"
     },
+    "uncategorized": {
+      "name": "Uncategorized",
+      "description": "Uncategorized services and tools",
+      "servers": [
+        "awslabs.aws-iac-mcp-server",
+        "applicationsignals",
+        "awslabs.document-loader-mcp-server"
+      ],
+      "icon": "\ud83d\udce6"
+    },
     "cost--operations": {
       "name": "Cost & Operations",
       "description": "Cost & Operations services and tools",
@@ -116,14 +126,6 @@
         "awslabs.terraform-mcp-server"
       ],
       "icon": "\ud83c\udfd7\ufe0f"
-    },
-    "uncategorized": {
-      "name": "Uncategorized",
-      "description": "Uncategorized services and tools",
-      "servers": [
-        "applicationsignals"
-      ],
-      "icon": "\ud83d\udce6"
     },
     "developer-tools--support": {
       "name": "Developer Tools & Support",

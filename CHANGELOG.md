@@ -2,6 +2,11 @@
 
 All notable changes to the Kiro MCP Manager extension will be documented in this file.
 
+## [1.5.1] - 2024-11-22
+
+### Changed
+- Updated MCP server configuration files with latest server definitions
+
 ## [1.5.0] - 2024-11-22
 
 ### Added
