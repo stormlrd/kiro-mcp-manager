@@ -514,11 +514,11 @@ export class ServerLoader {
         throw new Error('Master servers file has invalid structure');
       }
 
-      if (!parsed.servers || typeof parsed.servers !== 'object') {
-        throw new Error('Master servers file missing "servers" object');
+      if (!parsed.mcpServers || typeof parsed.mcpServers !== 'object') {
+        throw new Error('Master servers file missing "mcpServers" object');
       }
 
-      const servers = parsed.servers;
+      const servers = parsed.mcpServers;
 
       // Validate at least one server exists
       if (Object.keys(servers).length === 0) {
