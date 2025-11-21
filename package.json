@@ -9,7 +9,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/example/zen-mcp-manager"
+    "url": "https://github.com/stormlrd/kiro-mcp-manager"
+  },
+  "homepage": "https://github.com/stormlrd/kiro-mcp-manager#readme",
+  "bugs": {
+    "url": "https://github.com/stormlrd/kiro-mcp-manager/issues"
   },
   "engines": {
     "vscode": "^1.60.0"
