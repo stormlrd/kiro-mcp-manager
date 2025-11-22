@@ -40,6 +40,9 @@ interface GroupedServers {
 export function activate(context: vscode.ExtensionContext) {
     console.log('Zens MCP Manager is now active!');
 
+    // Check .gitignore for security FIRST (before creating any files)
+    checkGitignoreSecurity().catch(console.error);
+
     // Ensure env-vars.json exists in workspace
     ensureEnvVarsConfig(context).catch(console.error);
 
@@ -48,8 +51,6 @@ export function activate(context: vscode.ExtensionContext) {
         console.error('Failed to ensure agent hook:', error);
         // Don't block activation on hook creation failure
     });
-    // Check .gitignore for security
-    checkGitignoreSecurity().catch(console.error);
 
     // Create tree data providers
     const groupedProvider = new McpGroupedProvider(context);

@@ -71,30 +71,33 @@ For any bugs, feature requests please ensure you go to the github repo (click li
 - `.kiro/settings/mcp.json` - Your workspace MCP configuration (managed automatically)
 - `.kiro/settings/env-vars.json` - Your environment variables (edit via gear icon)
 
-## Agent Hook: Manual MCP Server Recommendations
+## Agent Hook: MCP Server Recommendations
 
-The extension installs a **manual agent hook** that analyzes your design documents and recommends relevant MCP servers for your project. This is a powerful way to have AI learn, review, and recommend what MCP servers your project needs based on the designs you've generated.
+The extension installs an **agent hook** that analyzes your design documents and recommends relevant MCP servers for your project. This is a powerful way to have AI learn, review, and recommend what MCP servers your project needs based on the designs you've generated.
 
 ### How It Works
 
-The hook is **manual**, meaning you trigger it when you're ready. When activated, it:
+The hook is **disabled by default** for manual triggering. When activated, it:
 1. Reads your design document content from `.kiro/specs/*/design.md`
 2. Analyzes the technical requirements and technologies mentioned
 3. Recommends relevant MCP servers from the available catalog
 4. Provides recommendations for you to review and load
 
-**Why Manual?** This gives you control over when recommendations are generated and lets you review them before loading servers into your workspace.
+**Why Disabled by Default?** This gives you control over when recommendations are generated and lets you review them before loading servers into your workspace.
 
 ### Running the Hook
 
 **To trigger the hook manually:**
-1. Open the Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
-2. Search for "Kiro: Run Hook"
-3. Select the "MCP Server Recommendations for Project" hook
+1. Open the Kiro sidebar and navigate to the "Agent Hooks" section
+2. Find "MCP Server Recommendations for Project" in the hooks list
+3. Click the hook to trigger it manually
 4. Review the AI's recommendations
-5. Use the extension to load recommended servers
+5. Copy the JSON array and run "MCP Manager: Load Recommended Servers" from the command palette
 
-Alternatively, you can configure the hook to run automatically on file events (see Customization below).
+**To enable automatic triggering:**
+1. Open the Agent Hooks UI in Kiro
+2. Find "MCP Server Recommendations for Project"
+3. Enable the hook - it will now run automatically when you save design.md files
 
 ### Hook Configuration
 
@@ -103,12 +106,13 @@ The hook is automatically created at `.kiro/hooks/mcp-server-recommendations.kir
 **Example Hook Structure:**
 ```json
 {
-  "enabled": true,
+  "enabled": false,
   "name": "MCP Server Recommendations for Project",
-  "description": "Analyzes all design documents in the project and generates a complete MCP server configuration",
+  "description": "Analyzes all design documents in the project and generates a complete MCP server configuration. This hook is disabled by default - enable it in the Agent Hooks view to run manually.",
   "version": "1",
   "when": {
-    "type": "manual"
+    "type": "fileSaved",
+    "patterns": [".kiro/specs/*/design.md"]
   },
   "then": {
     "type": "askAgent",
@@ -118,7 +122,7 @@ The hook is automatically created at `.kiro/hooks/mcp-server-recommendations.kir
 ```
 
 **Configuration Fields:**
-- `enabled` - Whether the hook is active
+- `enabled` - Whether the hook is active (false by default for manual triggering)
 - `name` - Human-readable name for the hook
 - `description` - Description of what the hook does
 - `version` - Hook configuration version
@@ -129,16 +133,15 @@ The hook is automatically created at `.kiro/hooks/mcp-server-recommendations.kir
 
 ### Trigger Pattern Explained
 
-The pattern `**/.kiro/specs/*/design.md` matches:
-- `**` - Any directory depth
-- `/.kiro/specs/` - The specs directory in your workspace
+The pattern `.kiro/specs/*/design.md` matches:
+- `.kiro/specs/` - The specs directory in your workspace
 - `*` - Any feature name directory
 - `/design.md` - The design document file
 
 **Examples of matching paths:**
 - `.kiro/specs/user-authentication/design.md`
 - `.kiro/specs/payment-processing/design.md`
-- `project/.kiro/specs/api-integration/design.md`
+- `.kiro/specs/api-integration/design.md`
 
 ### Agent Response Format
 
@@ -183,33 +186,33 @@ The agent looks for:
 
 You can modify the hook behavior by editing `.kiro/hooks/mcp-server-recommendations.kiro.hook`:
 
-**Run automatically on file creation** instead of manually:
+**Enable automatic triggering on file saves:**
+```json
+"enabled": true
+```
+
+**Run on file creation instead of saves:**
 ```json
 "when": {
   "type": "fileCreated",
-  "patterns": ["**/.kiro/specs/*/design.md"]
+  "patterns": [".kiro/specs/*/design.md"]
 }
 ```
 
-**Run automatically on file edits**:
+**Run on file edits:**
 ```json
 "when": {
   "type": "fileEdited",
-  "patterns": ["**/.kiro/specs/*/design.md"]
+  "patterns": [".kiro/specs/*/design.md"]
 }
 ```
 
 **Monitor different files** (e.g., requirements.md):
 ```json
 "when": {
-  "type": "fileCreated",
-  "patterns": ["**/.kiro/specs/*/requirements.md"]
+  "type": "fileSaved",
+  "patterns": [".kiro/specs/*/requirements.md"]
 }
-```
-
-**Disable the hook** temporarily:
-```json
-"enabled": false
 ```
 
 **Modify the prompt** to change analysis behavior (edit the `then.prompt` field with custom instructions)
@@ -218,9 +221,10 @@ You can modify the hook behavior by editing `.kiro/hooks/mcp-server-recommendati
 
 **Hook not triggering:**
 - Verify the hook file exists at `.kiro/hooks/mcp-server-recommendations.kiro.hook`
-- Check that your design.md file matches the pattern
-- Ensure the file event matches (created vs edited vs saved)
-- Open the Kiro Hook UI to verify the hook is registered and enabled
+- Check that the hook is enabled in the Agent Hooks UI (disabled by default)
+- Ensure your design.md file matches the pattern `.kiro/specs/*/design.md`
+- For automatic triggering, verify the file event matches (fileSaved by default)
+- For manual triggering, click the hook in the Agent Hooks view
 
 **No servers loaded:**
 - Check the agent response format matches the expected JSON structure

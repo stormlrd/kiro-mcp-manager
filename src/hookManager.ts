@@ -79,7 +79,10 @@ export class HookManager {
           
           // Validate hook config before writing
           if (!this.validateHookConfig(hookConfig)) {
-            throw new Error('Generated hook configuration is invalid');
+            const errorMsg = 'Generated hook configuration is invalid';
+            console.error(errorMsg);
+            vscode.window.showErrorMessage(`Failed to create MCP hook: ${errorMsg}. Check the output console for details.`);
+            return;
           }
           
           await this.createHook(hookPath, hookConfig);
@@ -116,13 +119,13 @@ export class HookManager {
    */
   private static createHookConfig(): KiroHookConfig {
     return {
-      enabled: true,
+      enabled: false,
       name: 'MCP Server Recommendations for Project',
-      description: 'Analyzes all design documents in the project and generates a complete MCP server configuration based on technologies, services, and requirements across all specs',
+      description: 'Analyzes all design documents in the project and generates a complete MCP server configuration based on technologies, services, and requirements across all specs. This hook is disabled by default - enable it in the Agent Hooks view to run manually.',
       version: '1',
       when: {
         type: 'userTriggered',
-        patterns: ['.kiro/*/*/design.md']
+        patterns: ['.kiro/specs/*/design.md']
       },
       then: {
         type: 'askAgent',
@@ -347,9 +350,9 @@ Here is your COMPLETE MCP server configuration for this project (analyzed 3 desi
         return false;
       }
 
-      const validWhenTypes = ['fileCreated', 'fileEdited', 'fileSaved', 'fileDeleted'];
+      const validWhenTypes = ['fileCreated', 'fileEdited', 'fileSaved', 'fileDeleted', 'userTriggered'];
       if (!validWhenTypes.includes(config.when.type)) {
-        console.error('Hook configuration has invalid when.type');
+        console.error('Hook configuration has invalid when.type:', config.when.type);
         return false;
       }
 
