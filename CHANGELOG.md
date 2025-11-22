@@ -2,6 +2,20 @@
 
 All notable changes to the Kiro MCP Manager extension will be documented in this file.
 
+## [1.5.3] - 2024-11-22
+
+### Fixed
+- Fixed gitignore security check timing - now runs before any file operations to warn users before sensitive files are created
+- Fixed agent hook not being created due to invalid hook type validation
+- Corrected hook configuration to use valid Kiro hook types (fileSaved instead of userTriggered)
+- Hook now created as disabled by default for manual triggering via Agent Hooks UI
+- Improved error visibility when hook creation fails
+
+### Changed
+- Gitignore security check now runs first in activation sequence
+- Hook pattern updated to be more specific: `.kiro/specs/*/design.md`
+- Hook description updated to clarify manual triggering behavior
+
 ## [1.5.2] - 2024-11-22
 
 ### Fixed
