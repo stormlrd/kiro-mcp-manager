@@ -6,9 +6,9 @@
       "description": "AI & Machine Learning services and tools",
       "servers": [
         "bedrock-agentcore-mcp-server",
-        "awslabs.amazon-kendra-index-mcp-server",
-        "awslabs.amazon-qbusiness-anonymous-mcp-server",
-        "awslabs.amazon_qindex_mcp_server",
+        "amazon-kendra-index-mcp-server",
+        "amazon-qbusiness-anonymous-mcp-server",
+        "amazon-qindex-mcp-server",
         "awslabs.aws-bedrock-custom-model-import-mcp-server",
         "bedrock-data-automation-mcp-server",
         "awslabs.bedrock-kb-retrieval-mcp-server",
@@ -23,7 +23,7 @@
         "amazon-keyspaces-mcp-server",
         "Neptune Query",
         "awslabs.aurora-dsql-mcp-server",
-        "awslabs.documentdb-mcp-server",
+        "documentdb-mcp-server",
         "awslabs.dynamodb-mcp-server",
         "awslabs.elasticache-mcp-server",
         "awslabs.memcached-mcp-server",
@@ -42,7 +42,7 @@
         "awslabs.amazon-mq-mcp-server",
         "awslabs.amazon-sns-sqs-mcp-server",
         "awslabs.aws-appsync-mcp-server",
-        "awslabs.aws-msk-mcp-server",
+        "aws-msk-mcp-server",
         "awslabs.stepfunctions-tool-mcp-server"
       ],
       "icon": "\ud83d\udce1"
@@ -60,11 +60,11 @@
       "name": "Specialized Services",
       "description": "Specialized Services services and tools",
       "servers": [
-        "awslabs.aws-dataprocessing-mcp-server",
+        "aws-dataprocessing-mcp-server",
         "awslabs.aws-diagram-mcp-server",
         "aws-iot-sitewise",
         "awslabs.aws-location-mcp-server",
-        "awslabs.core-mcp-server",
+        "core-mcp-server",
         "awslabs.timestream-for-influxdb-mcp-server"
       ],
       "icon": "\ud83c\udf10"
@@ -81,7 +81,7 @@
       "name": "Healthcare & Lifesciences",
       "description": "Healthcare & Lifesciences services and tools",
       "servers": [
-        "aws-healthomics",
+        "aws-healthomics-mcp-server",
         "healthlake"
       ],
       "icon": "\ud83c\udfe5"
@@ -91,8 +91,10 @@
       "description": "Uncategorized services and tools",
       "servers": [
         "awslabs.aws-iac-mcp-server",
-        "applicationsignals",
-        "awslabs.document-loader-mcp-server"
+        "awslabs.aws-network-mcp-server",
+        "cloudwatch-applicationsignals-mcp-server",
+        "awslabs.document-loader-mcp-server",
+        "sagemaker-ai-mcp-server"
       ],
       "icon": "\ud83d\udce6"
     },
@@ -119,7 +121,7 @@
         "awslabs.ccapi-mcp-server",
         "awslabs.cdk-mcp-server",
         "awslabs.cfn-mcp-server",
-        "awslabs.ecs-mcp-server",
+        "ecs-mcp-server",
         "eks-mcp-server",
         "awslabs.finch-mcp-server",
         "awslabs.lambda-tool-mcp-server",
