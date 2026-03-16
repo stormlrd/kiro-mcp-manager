@@ -1,5 +1,49 @@
 {
   "mcpServers": {
+    "BMAD-METHOD": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://gitmcp.io/bmad-code-org/BMAD-METHOD"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "fetch_BMAD_METHOD_documentation",
+        "search_BMAD_METHOD_code",
+        "search_BMAD_METHOD_documentation",
+        "fetch_generic_url_content"
+      ]
+    },
+    "Kiro Docs": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://gitmcp.io/kirodotdev/Kiro"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "search_Kiro_documentation",
+        "search_Kiro_code",
+        "fetch_Kiro_documentation",
+        "fetch_generic_url_content"
+      ]
+    },    
+    "strands-agents": {
+      "command": "uvx",
+      "args": ["strands-agents-mcp-server"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "INFO"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "search_docs",
+        "fetch_doc"
+      ]
+    },    
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },       
     "bedrock-agentcore-mcp-server": {
       "command": "uvx",
       "args": [
@@ -195,19 +239,16 @@
       "documentation_url": "https://awslabs.github.io/mcp/servers/aws-bedrock-data-automation-mcp-server/",
       "category": "AI & Machine Learning"
     },
-    "aws-dataprocessing-mcp-server": {
+    "aws.dp-mcp": {
       "command": "uvx",
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR",
-        "AWS_REGION": "us-east-1"
-      },
-      "autoApprove": [],
-      "disabled": false,
-      "transportType": "stdio",
       "args": [
         "awslabs.aws-dataprocessing-mcp-server@latest",
         "--allow-write"
       ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_REGION": "us-east-1"
+      },
       "documentation_url": "https://awslabs.github.io/mcp/servers/aws-dataprocessing-mcp-server/",
       "category": "Specialized Services"
     },
@@ -264,7 +305,7 @@
       "disabled": false,
       "autoApprove": [],
       "documentation_url": "https://awslabs.github.io/mcp/servers/aws-iac-mcp-server/",
-      "category": "Uncategorized"
+      "category": "Infrastructure & Deployment"
     },
     "aws-iot-sitewise": {
       "command": "uvx",
@@ -331,7 +372,7 @@
       "disabled": false,
       "autoApprove": [],
       "documentation_url": "https://awslabs.github.io/mcp/servers/aws-network-mcp-server/",
-      "category": "Uncategorized"
+      "category": "Infrastructure & Deployment"
     },
     "awslabs.aws-pricing-mcp-server": {
       "command": "uvx",
@@ -483,7 +524,7 @@
         "awslabs.cloudwatch-applicationsignals-mcp-server@latest"
       ],
       "documentation_url": "https://awslabs.github.io/mcp/servers/cloudwatch-applicationsignals-mcp-server/",
-      "category": "Uncategorized"
+      "category": "Cost & Operations"
     },
     "awslabs.cloudwatch-appsignals-mcp": {
       "autoApprove": [],
@@ -567,7 +608,7 @@
       "disabled": false,
       "autoApprove": [],
       "documentation_url": "https://awslabs.github.io/mcp/servers/document-loader-mcp-server/",
-      "category": "Uncategorized"
+      "category": "Data & Analytics"
     },
     "documentdb-mcp-server": {
       "command": "uvx",
@@ -589,7 +630,14 @@
         "awslabs.dynamodb-mcp-server@latest"
       ],
       "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
+        "AWS_PROFILE": "default",
+        "AWS_REGION": "us-west-2",
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "MYSQL_HOSTNAME": "<MYSQL_HOST>",
+        "MYSQL_PORT": "3306",
+        "MYSQL_SECRET_ARN": "arn:aws:secretsmanager:$REGION:$ACCOUNT_ID:secret:$SECRET_NAME",
+        "MYSQL_DATABASE": "<DATABASE_NAME>",
+        "MYSQL_MAX_QUERY_RESULTS": "500"
       },
       "disabled": false,
       "autoApprove": [],
@@ -689,6 +737,19 @@
       "autoApprove": [],
       "documentation_url": "https://awslabs.github.io/mcp/servers/git-repo-research-mcp-server/",
       "category": "Developer Tools & Support"
+    },
+    "awslabs.healthimaging-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "awslabs.healthimaging-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_REGION": "us-east-1"
+      },
+      "disabled": false,
+      "autoApprove": [],
+      "documentation_url": "https://awslabs.github.io/mcp/servers/healthimaging-mcp-server/",
+      "category": "Healthcare & Lifesciences"
     },
     "healthlake": {
       "command": "uvx",
@@ -812,16 +873,7 @@
       "command": "uvx",
       "args": [
         "awslabs.postgres-mcp-server@latest",
-        "--resource_arn",
-        "[your data]",
-        "--secret_arn",
-        "[your data]",
-        "--database",
-        "[your data]",
-        "--region",
-        "[your data]",
-        "--readonly",
-        "True"
+        "--allow_write_query"
       ],
       "env": {
         "AWS_PROFILE": "your-aws-profile",
@@ -885,7 +937,47 @@
         "--allow-sensitive-data-access"
       ],
       "documentation_url": "https://awslabs.github.io/mcp/servers/sagemaker-ai-mcp-server/",
-      "category": "Uncategorized"
+      "category": "AI & Machine Learning"
+    },
+    "sagemaker-unified-studio-mcp-troubleshooting": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://sagemaker-unified-studio-mcp.us-east-1.api.aws/spark-troubleshooting/mcp",
+        "--service",
+        "sagemaker-unified-studio-mcp",
+        "--profile",
+        "smus-mcp-profile",
+        "--region",
+        "us-east-1",
+        "--read-timeout",
+        "180"
+      ],
+      "timeout": 180000,
+      "disabled": false,
+      "documentation_url": "https://awslabs.github.io/mcp/servers/sagemaker-unified-studio-spark-troubleshooting-mcp-server/",
+      "category": "AI & Machine Learning"
+    },
+    "spark-upgrade": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://sagemaker-unified-studio-mcp.us-east-1.api.aws/spark-upgrade/mcp",
+        "--service",
+        "sagemaker-unified-studio-mcp",
+        "--profile",
+        "spark-upgrade-profile",
+        "--region",
+        "us-east-1",
+        "--read-timeout",
+        "180"
+      ],
+      "timeout": 180000,
+      "disabled": false,
+      "documentation_url": "https://awslabs.github.io/mcp/servers/sagemaker-unified-studio-spark-upgrade-mcp-server/",
+      "category": "AI & Machine Learning"
     },
     "awslabs.stepfunctions-tool-mcp-server": {
       "command": "uvx",
@@ -940,6 +1032,9 @@
       "env": {
         "AWS_PROFILE": "your-aws-profile",
         "AWS_REGION": "us-east-1",
+        "INFLUXDB_URL": "https://your-influxdb-endpoint:8086",
+        "INFLUXDB_TOKEN": "your-influxdb-token",
+        "INFLUXDB_ORG": "your-influxdb-org",
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,

@@ -12,7 +12,10 @@
         "awslabs.aws-bedrock-custom-model-import-mcp-server",
         "bedrock-data-automation-mcp-server",
         "awslabs.bedrock-kb-retrieval-mcp-server",
-        "awslabs.nova-canvas-mcp-server"
+        "awslabs.nova-canvas-mcp-server",
+        "sagemaker-ai-mcp-server",
+        "sagemaker-unified-studio-mcp-troubleshooting",
+        "spark-upgrade"
       ],
       "icon": "\ud83e\udd16"
     },
@@ -23,6 +26,7 @@
         "amazon-keyspaces-mcp-server",
         "Neptune Query",
         "awslabs.aurora-dsql-mcp-server",
+        "awslabs.document-loader-mcp-server",
         "documentdb-mcp-server",
         "awslabs.dynamodb-mcp-server",
         "awslabs.elasticache-mcp-server",
@@ -60,7 +64,7 @@
       "name": "Specialized Services",
       "description": "Specialized Services services and tools",
       "servers": [
-        "aws-dataprocessing-mcp-server",
+        "aws.dp-mcp",
         "awslabs.aws-diagram-mcp-server",
         "aws-iot-sitewise",
         "awslabs.aws-location-mcp-server",
@@ -82,21 +86,10 @@
       "description": "Healthcare & Lifesciences services and tools",
       "servers": [
         "aws-healthomics-mcp-server",
+        "awslabs.healthimaging-mcp-server",
         "healthlake"
       ],
       "icon": "\ud83c\udfe5"
-    },
-    "uncategorized": {
-      "name": "Uncategorized",
-      "description": "Uncategorized services and tools",
-      "servers": [
-        "awslabs.aws-iac-mcp-server",
-        "awslabs.aws-network-mcp-server",
-        "cloudwatch-applicationsignals-mcp-server",
-        "awslabs.document-loader-mcp-server",
-        "sagemaker-ai-mcp-server"
-      ],
-      "icon": "\ud83d\udce6"
     },
     "cost--operations": {
       "name": "Cost & Operations",
@@ -105,6 +98,7 @@
         "awslabs.aws-pricing-mcp-server",
         "awslabs.billing-cost-management-mcp-server",
         "awslabs.cloudtrail-mcp-server",
+        "cloudwatch-applicationsignals-mcp-server",
         "awslabs.cloudwatch-appsignals-mcp",
         "awslabs.cloudwatch-mcp-server",
         "awslabs.cost-explorer-mcp-server",
@@ -116,6 +110,8 @@
       "name": "Infrastructure & Deployment",
       "description": "Infrastructure & Deployment services and tools",
       "servers": [
+        "awslabs.aws-iac-mcp-server",
+        "awslabs.aws-network-mcp-server",
         "awslabs.aws-serverless-mcp-server",
         "awslabs_support_mcp_server",
         "awslabs.ccapi-mcp-server",
